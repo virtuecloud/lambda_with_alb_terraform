@@ -1,4 +1,8 @@
 update the following code on hello-python.py file for seamless performance
+
+
+
+
 -------------------------------------------------------
 import json
 
@@ -11,4 +15,7 @@ def lambda_handler(event, context):
         'statusCode': 200,
         'body': json.dumps('Hello from Lambda!')
     }
+
+
+
 ---------------------------------------------------------
