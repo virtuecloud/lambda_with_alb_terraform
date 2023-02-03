@@ -68,9 +68,9 @@ module "lambda_with_vpc" {
 Outputs
 =======
 - lambda_arn
-- load_balancer_ur
+- load_balancer_url
 
- Architecture
+ Architecture Diagram
  =======
 
 
