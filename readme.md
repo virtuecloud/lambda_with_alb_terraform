@@ -7,7 +7,7 @@ This terraform moldule provides a lambda function in private subnet, an applicat
 
 Module Input Variables
 ----------------------
-  | First Header                 | Second Header |
+  | Variables                 | Parameters |
 | -------------                  | ------------- |
 | lambda_bucket                  |" bucket name"|
 | lambda_file_handler        | "file handler name "|
