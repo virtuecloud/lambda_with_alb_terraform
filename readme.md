@@ -3,7 +3,7 @@ lambda invocation with alb terraform module
 
 A terraform module to provide a lambda function, vpc, s3 bucket and application load balancer in AWS,ETC.
 
-This terraform moldule provides a lambda function in private subnet, an application load balancer in public subnet which invokes the lambda function with a s3 bucket which is connected to the lambda function. 
+This terraform moldule provides a lambda function in private subnet, an application load balancer in public subnet which invokes the lambda function. Also an s3 bucket which is connected to the lambda function. 
 
 Module Input Variables
 ----------------------
