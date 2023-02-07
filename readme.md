@@ -7,19 +7,19 @@ This terraform moldule provides a lambda function in private subnet, an applicat
 
 Module Input Variables
 ----------------------
-  | Variables                 | Parameters |
-| -------------                  | ------------- |
-| lambda_bucket                  |" bucket name"|
-| lambda_file_handler        | "file handler name "|
-| lambda_file_name        | " path of file or file name "|
-| lambda_function_name        | "lambda function name"|
-| lambda_memory_size        | memory size|
-| lambda_runtime        | "runtime name"|
-| prv_subnet_ids        | private subnet id |
-| vpc_lambda        | vpc id|
-| pub_subnet_ids        | public subnet id|
-| load_balancer_name        | "load balancer name"|
-| env_vars |   environment variables |
+  |Name                 | Description |                  type |
+  | -------------                  | ------------- | -----------------|
+| lambda_bucket                  | bucket name|string|
+| lambda_file_handler        | file handler name | string|
+| lambda_file_name        |  path of file or file name | string|
+| lambda_function_name        | lambda function name|string|
+| lambda_memory_size        | memory size| integer|
+| lambda_runtime        | runtime name| string |
+| prv_subnet_ids        | private subnet id |list|
+| vpc_lambda        | vpc id|string
+| pub_subnet_ids        | public subnet id|list|
+| load_balancer_name        | load balancer name| string|
+| env_vars |   environment variables |map|
 
 
 Usage
@@ -67,8 +67,10 @@ module "lambda_with_vpc" {
 
 Outputs
 =======
-- lambda_arn
-- load_balancer_url
+|Name | Description|
+|-----|------------|
+|  lambda_arn| arn of the lambda function|
+ |load_balancer_url| url of the load balancer |
 
  Architecture Diagram
  =======
