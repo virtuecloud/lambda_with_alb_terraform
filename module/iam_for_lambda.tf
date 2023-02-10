@@ -1,7 +1,7 @@
 resource "aws_iam_role" "iam_for_lambda" {
   name = "${var.lambda_function_name}_role"
 
-  assume_role_policy = <<EOF
+  assume_role_policy = <<EO
 {
   "Version": "2012-10-17",
   "Statement": [
