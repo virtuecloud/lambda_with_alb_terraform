@@ -54,9 +54,9 @@ variable "lambda_file_handler" {
 variable "lambda_function_name" {
   
 }
-variable "lambda_file_name" {
+# variable "lambda_file_name" {
   
-}
+# }
 variable "lambda_memory_size" {
   
 }
@@ -88,3 +88,7 @@ variable "alb_request_methods" {
 variable "env_vars" {
  
 }
+
+variable "upload_from_s3" {
+
+} 

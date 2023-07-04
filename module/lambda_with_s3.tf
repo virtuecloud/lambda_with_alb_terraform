@@ -1,39 +1,43 @@
 
 resource "aws_s3_bucket_object" "function" {
-  bucket = aws_s3_bucket.bucket.id
+  count = var.upload_from_s3 ? 1 : 0
+  bucket = aws_s3_bucket.bucket[0].id
   key    = "hello-python.zip"
-  source = var.lambda_file_name
+  source = "${path.module}/python/lambda_code/hello-python.zip"
 }
 
-
+data "archive_file" "notifier_package" {
+  type        = "zip"
+  source_file = "${path.module}/python/lambda_code/hello-python.py"
+  output_path = "${path.module}/python/lambda_code/hello-python.zip"
+}
 
 
 resource "aws_lambda_function" "func" {
     # If the file is not in the current working directory you will need to include a
     # path.module in the filename.
-    //filename      = var.lambda_file_name
+    filename      = var.upload_from_s3 ? null : "${path.module}/python/lambda_code/hello-python.zip"
     function_name = var.lambda_function_name
     role          = aws_iam_role.iam_for_lambda.arn
-    handler       = var.lambda_file_handler
+    handler       = var.lambda_function_handler
     runtime       = var.lambda_runtime
     memory_size   = var.lambda_memory_size
     timeout = 3
-    s3_bucket = aws_s3_bucket_object.function.bucket
-    s3_key    = aws_s3_bucket_object.function.key
+    s3_bucket = var.upload_from_s3 ? aws_s3_bucket_object.function[0].bucket : null
+    s3_key    = var.upload_from_s3 ? aws_s3_bucket_object.function[0].key : null
+    # depends_on = [ aws_s3_bucket_object.function ]
     
     vpc_config {
       subnet_ids         = var.prv_subnet_ids
       security_group_ids = [aws_security_group.allow_tls.id]
     }
-    depends_on = [
-      aws_s3_bucket.bucket
-    ]
-    # dynamic "environment" {
-    #   for_each = var.env_vars
-    #   variables = {
-    #     environment.key=environment.value
-    #   }
-     
+
+
+    # depends_on = [
+    #   aws_s3_bucket.bucket
+    # ]
+
+  
      environment {
       
       variables = var.env_vars
@@ -52,6 +56,7 @@ resource "aws_lambda_function" "func" {
 
 
 resource "aws_s3_bucket" "bucket" {
-  bucket = var.lambda_bucket
+    count = var.upload_from_s3 ? 1 : 0
+    bucket = var.lambda_bucket
 }
 
