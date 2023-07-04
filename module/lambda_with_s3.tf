@@ -4,6 +4,7 @@ resource "aws_s3_bucket_object" "function" {
   bucket = aws_s3_bucket.bucket[0].id
   key    = "hello-python.zip"
   source = "${path.module}/python/lambda_code/hello-python.zip"
+  tags = var.tags
 }
 
 data "archive_file" "notifier_package" {
@@ -43,6 +44,8 @@ resource "aws_lambda_function" "func" {
       variables = var.env_vars
 
       }
+
+      tags = var.tags
        
         }
       
@@ -58,5 +61,7 @@ resource "aws_lambda_function" "func" {
 resource "aws_s3_bucket" "bucket" {
     count = var.upload_from_s3 ? 1 : 0
     bucket = var.lambda_bucket
+
+    tags = var.tags
 }
 

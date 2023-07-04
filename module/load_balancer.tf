@@ -9,6 +9,8 @@ resource "aws_lb_target_group" "main" {
   #   protocol = "HTTP"
   #   matcher = "200-499"
   # }
+
+  tags = var.tags
 }
 
 resource "aws_lambda_alias" "live" {
@@ -25,6 +27,8 @@ resource "aws_lb" "main" {
 
    subnets = var.pub_subnet_ids
    security_groups = [module.alb-sg.security_group_id]
+
+  tags = var.tags
   
 }
 resource "aws_lambda_permission" "alb" {
@@ -49,4 +53,5 @@ resource "aws_lb_listener" "main" {
     type             = "forward"
     target_group_arn = aws_lb_target_group.main.arn
   }
+  tags = var.tags
 }
