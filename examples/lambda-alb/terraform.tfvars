@@ -1,22 +1,22 @@
-s3_bucket_name = "example_bucket_name"
+s3_bucket_name = "example-bucket-name"
 
-lambda_func_handler = "example_func_handler"
+lambda_func_handler = "file-name.example-func-handler"   // example in this case hello-python.lambda_handler
 
-function_name = "example_func_name"
+function_name = "example-func-name"
 
-function_memory_size = "example_memory_size"
+function_memory_size = 512
 
-function_runtime = "example_runtime"
+function_runtime = "python3.8"
 
-private_subnets_ids = "example_pvt_subnet_id"
+private_subnets_ids = ["example-pvt-subnet-id"]
 
-vpc_id = "example_vpc_id"
+vpc_id = "example-vpc-id"
 
-public_subnets_ids = "example_pub_subnet_id"
+public_subnets_ids = ["example-pub-subnet-id"]
 
-alb_name = "example_alb"
+alb_name = "example-alb"
 
-lb_target_group = "example_target_group"
+lb_target_group = "example-target-group"
 
 upload_from_s3 = true
 

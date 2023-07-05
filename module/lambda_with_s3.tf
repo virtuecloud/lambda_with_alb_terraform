@@ -26,19 +26,13 @@ resource "aws_lambda_function" "func" {
     timeout = 3
     s3_bucket = var.upload_from_s3 ? aws_s3_bucket_object.function[0].bucket : null
     s3_key    = var.upload_from_s3 ? aws_s3_bucket_object.function[0].key : null
-    # depends_on = [ aws_s3_bucket_object.function ]
     
     vpc_config {
       subnet_ids         = var.prv_subnet_ids
       security_group_ids = [aws_security_group.allow_tls.id]
     }
 
-
-    # depends_on = [
-    #   aws_s3_bucket.bucket
-    # ]
-
-  
+      
      environment {
       
       variables = var.env_vars
