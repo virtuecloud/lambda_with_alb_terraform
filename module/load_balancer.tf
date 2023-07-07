@@ -1,12 +1,12 @@
 resource "aws_lb_target_group" "main" {
   name     = var.target_group_name
-  port     = 80
-  protocol = "HTTP"
+  port     = var.enable_ssl ? 443 : 80
+  protocol = var.enable_ssl ? "HTTPS" : "HTTP"
   vpc_id   = var.vpc_lambda
   target_type = "lambda"
   # health_check {
   #   enabled  = true
-  #   protocol = "HTTP"
+  #   protocol = var.enable_ssl ? "HTTPS" : "HTTP"
   #   matcher = "200-499"
   # }
 
@@ -36,7 +36,6 @@ resource "aws_lambda_permission" "alb" {
   action = "lambda:InvokeFunction"
   function_name = aws_lambda_function.func.function_name
   principal = "elasticloadbalancing.amazonaws.com"
- // qualifier = aws_lambda_alias.live.name
   source_arn = aws_lb_target_group.main.arn
 }
 resource "aws_lb_target_group_attachment" "main" {
@@ -45,9 +44,45 @@ resource "aws_lb_target_group_attachment" "main" {
   depends_on = [ aws_lambda_permission.alb ]
 }
 resource "aws_lb_listener" "main" {
+  count = var.enable_ssl ? 0 : 1
   load_balancer_arn = aws_lb.main.arn
   port              = 80
   protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.main.arn
+  }
+   
+  tags = var.tags
+}
+
+resource "aws_lb_listener" "redirect_to_https" {
+  count = var.enable_ssl ? 1 : 0
+  load_balancer_arn = aws_lb.main.arn
+  port              = 80
+  protocol          = "HTTP"
+
+ default_action {
+    type = "redirect"
+
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+
+  tags = var.tags
+}
+
+resource "aws_lb_listener" "main_https" {
+  count = var.enable_ssl ? 1 : 0
+  load_balancer_arn = aws_lb.main.arn
+  port              = 443
+  protocol          = "HTTPS"
+  ssl_policy        = var.ssl_policy_name
+  certificate_arn   = var.certificate_arn
 
   default_action {
     type             = "forward"

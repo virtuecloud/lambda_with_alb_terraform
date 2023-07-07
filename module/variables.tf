@@ -51,3 +51,16 @@ description = "Set this to true if you want your file to get uploaded from S3 bu
 variable "tags" {
   description = "Tags for resources"
 }
+
+variable "ssl_policy_name" {
+  description = "This is the name of your ssl policy"
+}
+
+variable "certificate_arn" {
+  description = "This is the arn of your ssl certificate"
+}
+
+variable "enable_ssl" {
+  default = false
+  description = "This is a boolean variable when set to true will change the load balancer listener port to 443(HTTPS) and when it is set to false then it will change the load balancer listener port to 80(HTTP)"
+}

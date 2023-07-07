@@ -1,5 +1,6 @@
 module "lambda_with_vpc" {
-  source = "git::https://github.com/virtuecloud/lambda_with_alb_terraform.git//module"
+  # source = "git::https://github.com/virtuecloud/lambda_with_alb_terraform.git//module"
+  source= "../../module"
   lambda_bucket = var.s3_bucket_name
   lambda_function_handler = var.lambda_func_handler
   lambda_function_name = var.function_name
@@ -13,4 +14,7 @@ module "lambda_with_vpc" {
   upload_from_s3 = var.upload_from_s3
   env_vars = var.env_vars
   tags = var.tags
+  ssl_policy_name = var.ssl_policy_name
+  certificate_arn = var.certificate_arn
+  enable_ssl = var.enable_ssl
   }

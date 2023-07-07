@@ -29,3 +29,10 @@ tags = {
   "ENV" = "DEV"
   "Terraform" = "true"
 }
+
+ssl_policy_name = "ELBSecurityPolicy-2016-08"
+
+certificate_arn = "arnawsiam:187416307283server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
+
+enable_ssl = false
+

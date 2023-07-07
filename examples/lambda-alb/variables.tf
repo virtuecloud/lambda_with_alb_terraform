@@ -49,3 +49,15 @@ variable "env_vars"{
 variable "tags" {
   
 }
+
+variable "ssl_policy_name" {
+  
+}
+
+variable "certificate_arn" {
+  
+}
+
+variable "enable_ssl" {
+  default = false
+}
